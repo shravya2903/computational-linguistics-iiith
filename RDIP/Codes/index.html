@@ -1,0 +1,29 @@
+<html>
+<head>
+<script>
+function getOption(subValue){
+	if(subValue == "english" || subValue == "hindi"){
+		document.getElementById("words_sentence").style.display="block";
+	}
+	else if(subValue=="null"){
+		document.getElementById("words_sentence").style.display="";
+	}
+}
+</script>
+</head>
+<body>
+<div id="selectLanguage" style="text-align: center">
+<select name="lang" autocomplete="off" onchange="getOption(this.value);">
+	<option value="null">---Select language---</option>
+	<option value="english">English</option>
+	<option value="hindi">Hindi</option>
+</select>
+</div>
+<br>
+<div align="center" id="words_sentence" style="display: none;">
+Form a sentence (Declarative or Interrogative or any other type) from the given words<br>
+(select the buttons in proper order).
+</div>
+<br>
+</body>
+</html>
