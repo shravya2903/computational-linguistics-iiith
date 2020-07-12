@@ -1,15 +1,8 @@
 <html>
 <head>
-<script>
-function getOption(subValue){
-	if(subValue == "english" || subValue == "hindi"){
-		document.getElementById("words_sentence").style.display="block";
-	}
-	else if(subValue=="null"){
-		document.getElementById("words_sentence").style.display="";
-	}
-}
-</script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="corpus.js"></script>
+<script type="text/javascript" src="functionality.js"></script>
 </head>
 <body>
 <div id="selectLanguage" style="text-align: center">
@@ -23,6 +16,8 @@ function getOption(subValue){
 <div align="center" id="words_sentence" style="display: none;">
 Form a sentence (Declarative or Interrogative or any other type) from the given words<br>
 (select the buttons in proper order).
+</div><br><br>
+<div align ="center" id="display_words" style="display:none;">
 </div>
 <br>
 </body>
