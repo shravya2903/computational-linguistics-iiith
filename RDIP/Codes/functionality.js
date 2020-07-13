@@ -11,17 +11,52 @@ function generateRandomWords(str)
 	}
 	return str;
 }
+function displaySentence(){
+	document.getElementById("sentence2").style.display="block";
+}
+function hideButton(buttonId){
+	console.log(buttonId);
+	document.getElementById(buttonId).style.display ="none";
+}
+function showButton(buttonId){
+	var buttonVal = document.getElementById(buttonId).innerHTML;
+	console.log(buttonVal);
+	document.getElementById("words-as-sentence").style.display="block";
+	document.getElementById("words-as-sentence").innerHTML += buttonVal+" ";
+}
 function generateWords(subValue,text)
 {
 	var str = text.split(' '); 
 	str = generateRandomWords(str);
+	var clicked = false; var set=false;
+	var count = 0;
 	for(var i=0;i<str.length;i++){
-		var bttn = document.createElement('Button');
-		bttn.id="word-button-"+i;
-		var val = "word-button-"+i;
+		var bttn = document.createElement("button");
+		bttn.id=i;
+		var val =i;
 		bttn.innerHTML = str[i];
 		document.getElementById("display_words").appendChild(bttn);
 		document.getElementById(val).style.margin = "15px";
+		document.getElementById(val).addEventListener("click", function(){
+			clicked = true;
+			count++;
+			if(count == 1){
+				displaySentence();
+			}
+			console.log(count);
+			console.log(document.getElementById(this.id).value);
+			showButton(this.id);
+			hideButton(this.id);
+			
+			if(count == 1){
+				document.getElementById("words-as-sentence-1").style.display="block";
+				var btn = document.createElement('Button');
+				btn.id="reform";
+				btn.innerHTML = "Re-form the sentence";
+				document.getElementById("words-as-sentence-1").appendChild(btn);
+				
+			}
+		});
 	}
 }
 function generateRandom(subValue)
