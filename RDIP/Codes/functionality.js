@@ -15,7 +15,7 @@ function displaySentence(){
 	document.getElementById("sentence2").style.display="block";
 }
 function hideElement(elementId){
-	console.log(elementId);
+	//console.log(elementId);
 	document.getElementById(elementId).style.display ="none";
 }
 function showElement(elementId){
@@ -36,6 +36,7 @@ function generateWords(subValue,text)
 	str = generateRandomWords(str);
 	var clicked = false;
 	var hide = false;
+	var v = false;
 	var count = 0;
 	for(var i=0;i<str.length;i++){
 		var bttn = document.createElement("button");
@@ -50,9 +51,9 @@ function generateWords(subValue,text)
 			if(count == 1){
 				displaySentence();
 			}
-			console.log(count);
+			//console.log(count);
 			var id = this.id;
-			console.log(document.getElementById(this.id).value);
+			//console.log(document.getElementById(this.id).value);
 			showButton(this.id);
 			hideElement(this.id);
 			if(count == 1 && hide==false){
@@ -67,21 +68,35 @@ function generateWords(subValue,text)
 				document.getElementById("reform").style.display="block";
 				console.log("this");
 			}
+			if(count == str.length){
+				v = true;
+				//console.log("satisfied");
+				document.getElementById("words-as-sentence-2").style.display = "block";
+				var bttn = document.createElement("Button");
+				bttn.id = "checkCorrectness";
+				bttn.innerHTML = "Check the Correctness of this sentence";
+				document.getElementById("words-as-sentence-2").appendChild(bttn);
+				count=0;
+			}
 			document.getElementById("reform").addEventListener("click",function(){
 				//have to revert the sentence back to the same form.
-				console.log("reforming");
+				//console.log("reforming");
 				showElement(id);
 				hideElement("sentence2");
 				hideElement("words-as-sentence");
 				hideElement("words-as-sentence-1");
 				hideElement("reform");
+				if(v == true){
+					hideElement("checkCorrectness");
+					hideElement("words-as-sentence-2");
+				}
 				hide = true;
 				count = 0;
 				clearData();
-				i=0;
+				clicked=false;
+				//i=0;
 			});
 		});
-
 	}
 }
 function generateRandom(subValue)
