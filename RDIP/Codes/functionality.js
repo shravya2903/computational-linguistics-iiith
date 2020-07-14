@@ -14,9 +14,12 @@ function generateRandomWords(str)
 function displaySentence(){
 	document.getElementById("sentence2").style.display="block";
 }
-function hideButton(buttonId){
-	console.log(buttonId);
-	document.getElementById(buttonId).style.display ="none";
+function hideElement(elementId){
+	console.log(elementId);
+	document.getElementById(elementId).style.display ="none";
+}
+function showElement(elementId){
+	document.getElementById(elementId).style.display = "inline";
 }
 function showButton(buttonId){
 	var buttonVal = document.getElementById(buttonId).innerHTML;
@@ -24,11 +27,15 @@ function showButton(buttonId){
 	document.getElementById("words-as-sentence").style.display="block";
 	document.getElementById("words-as-sentence").innerHTML += buttonVal+" ";
 }
+function clearData(){
+	document.getElementById("words-as-sentence").innerHTML="";
+}
 function generateWords(subValue,text)
 {
 	var str = text.split(' '); 
 	str = generateRandomWords(str);
-	var clicked = false; var set=false;
+	var clicked = false;
+	var hide = false;
 	var count = 0;
 	for(var i=0;i<str.length;i++){
 		var bttn = document.createElement("button");
@@ -44,19 +51,37 @@ function generateWords(subValue,text)
 				displaySentence();
 			}
 			console.log(count);
+			var id = this.id;
 			console.log(document.getElementById(this.id).value);
 			showButton(this.id);
-			hideButton(this.id);
-			
-			if(count == 1){
+			hideElement(this.id);
+			if(count == 1 && hide==false){
 				document.getElementById("words-as-sentence-1").style.display="block";
 				var btn = document.createElement('Button');
 				btn.id="reform";
 				btn.innerHTML = "Re-form the sentence";
-				document.getElementById("words-as-sentence-1").appendChild(btn);
-				
+				document.getElementById("words-as-sentence-1").appendChild(btn);	
 			}
+			else if(count == 1&& hide == true){
+				document.getElementById("words-as-sentence-1").style.display="block";
+				document.getElementById("reform").style.display="block";
+				console.log("this");
+			}
+			document.getElementById("reform").addEventListener("click",function(){
+				//have to revert the sentence back to the same form.
+				console.log("reforming");
+				showElement(id);
+				hideElement("sentence2");
+				hideElement("words-as-sentence");
+				hideElement("words-as-sentence-1");
+				hideElement("reform");
+				hide = true;
+				count = 0;
+				clearData();
+				i=0;
+			});
 		});
+
 	}
 }
 function generateRandom(subValue)
