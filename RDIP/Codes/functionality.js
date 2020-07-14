@@ -51,9 +51,7 @@ function generateWords(subValue,text,varr,y)
 			if(count == 1){
 				displaySentence();
 			}
-			//console.log(count);
 			var id = this.id;
-			//console.log(document.getElementById(this.id).value);
 			showButton(this.id);
 			hideElement(this.id);
 			if(count == 1 && hide==false){
@@ -66,7 +64,6 @@ function generateWords(subValue,text,varr,y)
 			else if(count == 1&& hide == true){
 				document.getElementById("words-as-sentence-1").style.display="block";
 				document.getElementById("reform").style.display="block";
-				console.log("this");
 			}
 			if(count == str.length){
 				v = true;
@@ -85,7 +82,6 @@ function generateWords(subValue,text,varr,y)
 				document.getElementById("checkCorrectness").addEventListener("click",function(){
 					//get the sentence formed.
 					var sentence = document.getElementById("words-as-sentence").innerHTML;
-					console.log(sentence);
 					//check whether the sentence matches.
 					var compare;
 					if(subValue == "english"){
@@ -115,9 +111,12 @@ function generateWords(subValue,text,varr,y)
 							case "g": compare = Hindi.g;break;
 						}
 					}
-					var i,result=false;
+					var i,result;
 					for(i=0;i<compare.length;i++){
-						if(sentence.localeCompare(compare[i]) == 1){
+						var sen = compare[i].replace(/\s+/g, '');
+						var sen1 = sentence.replace(/\s+/g, '');
+						
+						if(sen === sen1){							
 							result = true;
 							break;
 						}
@@ -129,10 +128,20 @@ function generateWords(subValue,text,varr,y)
 					if(result == true){
 						document.getElementById("result").innerHTML = "Right Answer";
 					}
-					else{
+					else if(result == false){
 						document.getElementById("result").innerHTML = "Wrong Answer";
+						if(hide == false){
+							document.getElementById("result-op").style.display="block";
+							var bttn = document.createElement("Button");
+							bttn.id="getCorrect";
+							bttn.innerHTML = "Get Correct Sentence";
+							document.getElementById("result-op").appendChild(bttn);
+						}
+						else if(hide == true){
+							document.getElementById("result-op").style.display = "block";
+							document.getElementById("getCorrect").style.display="block";
+						}	
 					}
-					sentence="";
 				});
 			}
 			document.getElementById("reform").addEventListener("click",function(){
@@ -143,14 +152,17 @@ function generateWords(subValue,text,varr,y)
 				hideElement("words-as-sentence-1");
 				hideElement("reform");
 				if(v == true){
-					hideElement("checkCorrectness");
+					console.log("true");
 					hideElement("words-as-sentence-2");
-					clearData("result");
+					hideElement("checkCorrectness");
 					hideElement("result");
+					hideElement("result-op");
+					hideElement("getCorrect");
 				}
 				hide = true;
 				count = 0;
-				clearData("words-as-sentence");
+				document.getElementById("words-as-sentence").innerHTML="";
+				document.getElementById("result").innerHTML="";
 				clicked=false;
 				v=false;
 				//i=0;
