@@ -27,10 +27,10 @@ function showButton(buttonId){
 	document.getElementById("words-as-sentence").style.display="block";
 	document.getElementById("words-as-sentence").innerHTML += buttonVal+" ";
 }
-function clearData(){
-	document.getElementById("words-as-sentence").innerHTML="";
+function clearData(id){
+	document.getElementById(id).innerHTML="";
 }
-function generateWords(subValue,text)
+function generateWords(subValue,text,varr,y)
 {
 	var str = text.split(' '); 
 	str = generateRandomWords(str);
@@ -70,17 +70,73 @@ function generateWords(subValue,text)
 			}
 			if(count == str.length){
 				v = true;
-				//console.log("satisfied");
-				document.getElementById("words-as-sentence-2").style.display = "block";
-				var bttn = document.createElement("Button");
-				bttn.id = "checkCorrectness";
-				bttn.innerHTML = "Check the Correctness of this sentence";
-				document.getElementById("words-as-sentence-2").appendChild(bttn);
+				if(hide == false){
+					document.getElementById("words-as-sentence-2").style.display = "block";
+					var bttn = document.createElement("Button");
+					bttn.id = "checkCorrectness";
+					bttn.innerHTML = "Check the Correctness of this sentence";
+					document.getElementById("words-as-sentence-2").appendChild(bttn);
+				}
+				else if(hide == true){
+					document.getElementById("words-as-sentence-2").style.display = "block";
+					document.getElementById("checkCorrectness").style.display="block";
+				}	
 				count=0;
+				document.getElementById("checkCorrectness").addEventListener("click",function(){
+					//get the sentence formed.
+					var sentence = document.getElementById("words-as-sentence").innerHTML;
+					console.log(sentence);
+					//check whether the sentence matches.
+					var compare;
+					if(subValue == "english"){
+						var index = varr[y];
+						switch(index){
+							case "a": compare = English.a;break;
+							case "b": compare = English.b;break;
+							case "c": compare = English.c;break;
+							case "d": compare = English.d;break;
+							case "e": compare = English.e;break;
+							case "f": compare = English.f;break;
+							case "g": compare = English.g;break;
+							case "h": compare = English.h;break;
+							case "i": compare = English.i;break;
+							case "j": compare = English.j;break;
+						}
+					}
+					else{
+						var index = varr[y];
+						switch(index){
+							case "a": compare = Hindi.a;break;
+							case "b": compare = Hindi.b;break;
+							case "c": compare = Hindi.c;break;
+							case "d": compare = Hindi.d;break;
+							case "e": compare = Hindi.e;break;
+							case "f": compare = Hindi.f;break;
+							case "g": compare = Hindi.g;break;
+						}
+					}
+					var i,result=false;
+					for(i=0;i<compare.length;i++){
+						if(sentence.localeCompare(compare[i]) == 1){
+							result = true;
+							break;
+						}
+						else{
+							result = false;
+						}
+					}
+					document.getElementById("result").style.display="block";
+					if(result == true){
+						document.getElementById("result").innerHTML = "Right Answer";
+					}
+					else{
+						document.getElementById("result").innerHTML = "Wrong Answer";
+					}
+					sentence="";
+				});
 			}
 			document.getElementById("reform").addEventListener("click",function(){
 				//have to revert the sentence back to the same form.
-				//console.log("reforming");
 				showElement(id);
 				hideElement("sentence2");
 				hideElement("words-as-sentence");
@@ -89,13 +145,17 @@ function generateWords(subValue,text)
 				if(v == true){
 					hideElement("checkCorrectness");
 					hideElement("words-as-sentence-2");
+					clearData("result");
+					hideElement("result");
 				}
 				hide = true;
 				count = 0;
-				clearData();
+				clearData("words-as-sentence");
 				clicked=false;
+				v=false;
 				//i=0;
 			});
+			
 		});
 	}
 }
@@ -105,30 +165,32 @@ function generateRandom(subValue)
 	if(subValue == "english")
 	{
 		arr = new Array();
-		arr[0] = English.a[0];
-		arr[1] = English.b[0];
-		arr[2] = English.c[0];
-		arr[3] = English.d[0];
-		arr[4] = English.e[0];
-		arr[5] = English.f[0];
-		arr[6] = English.g[0];
-		arr[7] = English.h[0];
-		arr[8] = English.i[0];
-		arr[9] = English.j[0];
+		varr = new Array();
+		arr[0] = English.a[0];varr[0] = "a";
+		arr[1] = English.b[0];varr[1] = "b";
+		arr[2] = English.c[0];varr[2] = "c";
+		arr[3] = English.d[0];varr[3] = "d";
+		arr[4] = English.e[0];varr[4] = "e";
+		arr[5] = English.f[0];varr[5] = "f";
+		arr[6] = English.g[0];varr[6] = "g";
+		arr[7] = English.h[0];varr[7] = "h";
+		arr[8] = English.i[0];varr[8] = "i";
+		arr[9] = English.j[0];varr[9] = "j";
 	}
 	else{
 		arr = new Array();
-		arr[0] = Hindi.a[0];
-		arr[1] = Hindi.b[0];
-		arr[2] = Hindi.c[0];
-		arr[3] = Hindi.d[0];
-		arr[4] = Hindi.e[0];
-		arr[5] = Hindi.f[0];
-		arr[6] = Hindi.g[0];
+		varr = new Array();
+		arr[0] = Hindi.a[0];varr[0] = "a";
+		arr[1] = Hindi.b[0];varr[1] = "b";
+		arr[2] = Hindi.c[0];varr[2] = "c";
+		arr[3] = Hindi.d[0];varr[3] = "d";
+		arr[4] = Hindi.e[0];varr[4] = "e";
+		arr[5] = Hindi.f[0];varr[5] = "f";
+		arr[6] = Hindi.g[0];varr[6] = "g";
 	}
 	y = Math.floor(Math.random()*arr.length);
 	var text = arr[y];
-	generateWords(subValue,text);
+	generateWords(subValue,text,varr,y);
 	document.getElementById("display_words").style.display="block";
     arr.splice(y, 1);
 }
