@@ -79,8 +79,11 @@ function generateWords(subValue,text,varr,y)
 					document.getElementById("checkCorrectness").style.display="block";
 				}	
 				count=0;
+				var ck=false;
+				var c=0;
 				document.getElementById("checkCorrectness").addEventListener("click",function(){
 					//get the sentence formed.
+					
 					var sentence = document.getElementById("words-as-sentence").innerHTML;
 					//check whether the sentence matches.
 					var compare;
@@ -130,18 +133,50 @@ function generateWords(subValue,text,varr,y)
 					}
 					else if(result == false){
 						document.getElementById("result").innerHTML = "Wrong Answer";
-						if(hide == false){
+						if(hide == false && c==0){
 							document.getElementById("result-op").style.display="block";
 							var bttn = document.createElement("Button");
 							bttn.id="getCorrect";
 							bttn.innerHTML = "Get Correct Sentence";
 							document.getElementById("result-op").appendChild(bttn);
+							c++;
 						}
 						else if(hide == true){
 							document.getElementById("result-op").style.display = "block";
 							document.getElementById("getCorrect").style.display="block";
-						}	
+						}
+						if(ck == true){
+							document.getElementById("getCorrect").innerHTML="Get Correct Sentence";
+							clearData("correct-text");
+							hideElement("correct-text");
+							console.log("hiding element");
+						}
+						var elem = document.getElementById("getCorrect").innerHTML;
+						document.getElementById("getCorrect").addEventListener("click",function(){
+							ck = true;
+							var flag = false;
+							if(elem == "Hide The Correct Sentence" && flag == false){
+								//console.log(elem);
+									clearData("correct-text");
+									document.getElementById("correct-text").style.display = "none";
+									elem = "Get Answers";
+									flag = true;
+							}
+							else if (elem=="Get Correct Sentence" || elem=="Get Answers" && flag == false){
+								var op="";
+								for(i=0;i<compare.length;i++){
+									op += compare[i]+"<br>";
+								}
+								document.getElementById("correct-text").style.display="block";
+								clearData("correct-text");
+								document.getElementById("correct-text").innerHTML = op;
+								elem = "Hide The Correct Sentence";
+								flag = true;
+							}
+							document.getElementById("getCorrect").innerHTML = elem;
+						});
 					}
+					
 				});
 			}
 			document.getElementById("reform").addEventListener("click",function(){
@@ -157,6 +192,8 @@ function generateWords(subValue,text,varr,y)
 					hideElement("checkCorrectness");
 					hideElement("result");
 					hideElement("result-op");
+					hideElement("getCorrect");
+					hideElement("correct-text");
 					hideElement("getCorrect");
 				}
 				hide = true;
