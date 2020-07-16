@@ -1,0 +1,19 @@
+.h1,.h2{
+	font-weight:bold;
+	color: #ccffff;
+	font-family:Arial;
+}
+.drop-down {
+    text-align:center;
+    position: relative;
+    font-family: Arial;
+    padding: 30px;
+}
+.d1{
+	color: blue;
+}
+.d3{
+	color:red;
+}
+
+	
