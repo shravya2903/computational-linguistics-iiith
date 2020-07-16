@@ -255,6 +255,7 @@ function displayButtons(subValue){
 }
 function getOption(subValue){
 	if(subValue == "english" || subValue == "hindi"){
+		clearData("display_words");
 		document.getElementById("words_sentence").style.display="block";
 	}
 	else if(subValue=="null"){
