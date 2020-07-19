@@ -1,0 +1,20 @@
+Unit-4
+Experiment-2
+
+step-1: select an option from the dropdown and get the message of the corpus printed.
+showText()
+
+step-2: A message - "Enter the number of tokens and types of the above corpus" has to appear followed by 2 text fields - #types and #tokens. There is a submit button after this.
+
+step-3: Onclicking the submit button the text field's colors are decided based on right or wrong values entered. Wrong means the color is red and right means it is green.
+
+step-4: If any of the 2 boxes is red - "Wrong Answer" message has to be displayed.
+
+step-5: If both of the text fields are in green, then "Right Answer" has to be displayed along with another button "Continue".
+ 
+step-6: On clicking the Continue button, the right answer message long with the continue and submit buttons gets vanished.
+A message "Now, consider all the tokens with the same 'root' word to be of the same type. Recalculate the number of types" has to be displayed.
+A input text box with label #new types has to appear.
+A submit button has to appear.
+
+step-7: After clicking on the submit button, the #new types text field has to turn red if the value is wrong. And a message "Wrong Answer" has to be displayed. If it is a right answer, then the field has to turn green.
